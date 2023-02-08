@@ -1,0 +1,9 @@
+html5lib
+lxml
+requests
+pymysql
+python-dotenv
+pandas
+numpy
+mysql-connector
+sqlalchemy

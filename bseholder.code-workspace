@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {"python.defaultInterpreterPath": "/Users/abhishekkumartemplap/.local/share/virtualenvs/bseholder-Mc_WuGN0/bin/python"},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				
+					"name": "run.py",
+					"type": "python",
+					"request": "launch",
+					"program": "/Users/abhishekkumartemplap/Downloads/ankit/bseholder/run.py",
+					"console": "integratedTerminal",
+					"envFile": "${workspaceFolder}/.env",
+					
+				},
+				{
+					"name": "runcopy.py",
+					"type": "python",
+					"request": "launch",
+					"program": "/Users/abhishekkumartemplap/Downloads/ankit/bseholder/runcopy.py",
+					"console": "integratedTerminal",
+					"envFile": "${workspaceFolder}/.env",
+				},
+				
+				]}
+}
