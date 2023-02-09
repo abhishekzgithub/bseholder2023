@@ -47,7 +47,7 @@ def init(bseticker=[]):
 			print(f"{bseid} has started")
 			for new_qtrid in constants.period_id:
 				revised_qtrids=[new_qtrid]
-				for i in range(4):
+				for i in range(2):
 					new_qtrid+=0.01
 					new_qtrid=round(new_qtrid,2)
 					revised_qtrids.append(new_qtrid)
