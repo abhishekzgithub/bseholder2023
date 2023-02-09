@@ -132,4 +132,70 @@ def get_dataframe(case_type,tree,columns):
         df=Case25(tree,columns).final_result()
     elif case_type==52:
         df=Case26(tree,columns).final_result()
+    elif case_type==53:
+        df=Case27(tree,columns).final_result()
+    elif case_type==54:
+        df=Case28(tree,columns).final_result()
+    elif case_type==55:
+        df=Case29(tree,columns).final_result()
+    elif case_type==56:
+        df=Case30(tree,columns).final_result()
+    elif case_type==58:
+        df=Case31(tree,columns).final_result()
+    elif case_type==59:
+        df=Case32(tree,columns).final_result()
+    elif case_type==60:
+        df=Case33(tree,columns).final_result()
+    elif case_type==61:
+        df=Case34(tree,columns).final_result()
+    elif case_type==62:
+        df=Case35(tree,columns).final_result()
+    elif case_type==63:
+        df=Case36(tree,columns).final_result()
+    elif case_type==64:
+        df=Case37(tree,columns).final_result()
+    elif case_type==65:
+        df=Case38(tree,columns).final_result()
+    elif case_type==66:
+        df=Case39(tree,columns).final_result()
+    elif case_type==67:
+        df=Case40(tree,columns).final_result()
+    elif case_type==68:
+        df=Case41(tree,columns).final_result()
+    elif case_type==69:
+        df=Case42(tree,columns).final_result()
+    elif case_type==70:
+        df=Case43(tree,columns).final_result()
+    elif case_type==71:
+        df=Case44(tree,columns).final_result()
+    elif case_type==72:
+        df=Case45(tree,columns).final_result()
+    elif case_type==73:
+        df=Case46(tree,columns).final_result()
+    elif case_type==74:
+        df=Case47(tree,columns).final_result()
+    elif case_type==75:
+        df=Case48(tree,columns).final_result()
+    elif case_type==76:
+        df=Case49(tree,columns).final_result()
+    elif case_type==77:
+        df=Case50(tree,columns).final_result()
+    elif case_type==78:
+        df=Case51(tree,columns).final_result()
+    elif case_type==79:
+        df=Case52(tree,columns).final_result()
+    elif case_type==80:
+        df=Case53(tree,columns).final_result()
+    elif case_type==81:
+        df=Case54(tree,columns).final_result()
+    elif case_type==82:
+        df=Case55(tree,columns).final_result()
+    elif case_type==83:
+        df=Case56(tree,columns).final_result()
+    elif case_type==84:
+        df=Case57(tree,columns).final_result()
+    elif case_type==85:
+        df=Case58(tree,columns).final_result()
+    elif case_type==86:
+        df=Case59(tree,columns).final_result()
     return df

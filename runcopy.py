@@ -4,7 +4,7 @@ import os
 import threading
 from traceback import format_exc
 from main import *
-
+from datetime import datetime
 from utility import *
 from run_test_urls import TEST_URLS
 import constants
@@ -23,10 +23,16 @@ def get_case_type(columns):
 		if known_columns==columns:
 			case_type=((columns_type_df.case.iloc[row:row+1]).values)[0]
 			break
+	if not columns:
+		print("No columns fetched")
+		return
+	if not case_type:
+		print(f"case_type is none with columns {columns}")
 	return case_type
 
-def get_dataframe_and_exception(URL,bseid,qtrid):
+def get_dataframe_and_exception(URL,url_exeception):
 	url_exeception=[]
+	final_df=pd.DataFrame()
 	for url in URL:
 		print(f"{url}")
 		try:
@@ -35,41 +41,37 @@ def get_dataframe_and_exception(URL,bseid,qtrid):
 				continue
 			tree = html.fromstring(r.content)
 			columns,status=get_column_name(tree)
-			if not status and columns==[]:
+			if not (status and columns):
 				continue
 			case_type=get_case_type(columns)
 			df=get_dataframe(case_type,tree,columns)
-			df['bseid']=bseid
-			df['qtrid']=qtrid
-			final_df=final_df.append(df,ignore_index=True)
+			bseid_qtr_id=re.findall('\d',url)
+			df['bseid']=bseid=int("".join(bseid_qtr_id[:6]))
+			df['qtrid']=qtrid=int("".join(bseid_qtr_id[6:]))
 			final_df=pd.concat([final_df,df],ignore_index=True)
 			#save_df(df,filename="BSEID_"+str(bseid)+"_qtrid_"+str(qtrid))
-			print(f"{url} saved")
+			print(f"{url} added")
 		except Exception as e:
-			print(f"In Exception inner {e} {case_type} {url}")
+			print(f"In Exception inner {e} , case type: {case_type} \nURL: {url}")
 			url_exeception.append(url)
 			print(f"{e}{format_exc()} \n caseid is {case_type} \n {url}")
-		return final_df,url_exeception
+	return final_df,url_exeception
 
-def init(bseticker=[]):
-	final_df=pd.DataFrame()
+def init():
 	url_exeception=[]
 	try:
-		for bseid in bseticker:
-			print(f"{bseid} has started")
-			for qtrid in constants.period_id:
-				URL=TEST_URLS
-				final_df,url_exeception = get_dataframe_and_exception(URL,bseid,qtrid)	
+		URL=TEST_URLS
+		final_df,url_exeception = get_dataframe_and_exception(URL,url_exeception)
 	except Exception as e:
 		print(e)
 		print(f"{e} \n {format_exc()}")
 	finally:
 		print(f"exceptional urls are {url_exeception}")
 		if not final_df.empty:
-			save_df(final_df,filename="final_df")
+			save_df(final_df,filename="final_df"+str(datetime.now().strftime("%Y%m%d_%H_%M_%S")))
 if __name__=='__main__':
 	print("Program has started")
-	init(bseticker=[1])
+	init()
 	#x = threading.Thread(target=thread_function, args=(1,))
 	#x.start()
 	#x.join()

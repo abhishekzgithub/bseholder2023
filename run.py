@@ -54,17 +54,14 @@ def init(bseticker=[]):
 						continue
 					tree = html.fromstring(r.content)
 					columns,status=get_column_name(tree)
-					if not status and columns==[]:
+					if not (status and columns):
 						continue
 					case_type=get_case_type(columns)
-					if case_type is None:
-						raise Exception("Case type not found")
 					df=get_dataframe(case_type,tree,columns)
 					df['bseid']=bseid
 					df['qtrid']=qtrid
-					final_df=final_df.append(df,ignore_index=True)
 					final_df=pd.concat([final_df,df],ignore_index=True)
-					save_df(df,filename="BSEID_"+str(bseid)+"_qtrid_"+str(qtrid))
+					#save_df(df,filename="BSEID_"+str(bseid)+"_qtrid_"+str(qtrid))
 				except Exception as e:
 					print(f"In Exception inner {e} {case_type} {url}")
 					url_exeception.append(url)
@@ -72,10 +69,14 @@ def init(bseticker=[]):
 	except Exception as e:
 		print(e)
 		print(f"{e} \n {format_exc()}")
+	except KeyboardInterrupt:
+		print(f"exceptional urls are {url_exeception}")
+		if not final_df.empty:
+			save_df(final_df,filename="final_df"+str(datetime.now().strftime("%Y%m%d_%H_%M_%S")))
 	finally:
 		print(f"exceptional urls are {url_exeception}")
 		if not final_df.empty:
-			save_df(final_df,filename="final_df"+str(datetime.now()))
+			save_df(final_df,filename="final_df"+str(datetime.now().strftime("%Y%m%d_%H_%M_%S")))
 if __name__=='__main__':
 	print("Program has started")
 	bsetickerid=pd.read_csv(constants.BSE_EQUITY_LIST)
