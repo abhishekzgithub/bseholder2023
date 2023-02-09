@@ -45,27 +45,34 @@ def init(bseticker=[]):
 	try:
 		for bseid in bseticker:
 			print(f"{bseid} has started")
-			for qtrid in constants.period_id:
-				url=f'https://www.bseindia.com/corporates/shpPromoterNGroup.aspx?scripcd={str(bseid)}&qtrid={str(qtrid)}'
-				print(f"{url}")
-				try:
-					r = requests.get(url=url, headers=constants.HEADERS)
-					if not available(r):
-						continue
-					tree = html.fromstring(r.content)
-					columns,status=get_column_name(tree)
-					if not (status and columns):
-						continue
-					case_type=get_case_type(columns)
-					df=get_dataframe(case_type,tree,columns)
-					df['bseid']=bseid
-					df['qtrid']=qtrid
-					final_df=pd.concat([final_df,df],ignore_index=True)
-					#save_df(df,filename="BSEID_"+str(bseid)+"_qtrid_"+str(qtrid))
-				except Exception as e:
-					print(f"In Exception inner {e} {case_type} {url}")
-					url_exeception.append(url)
-					print(f"{e}{format_exc()} \n caseid is {case_type} \n {url}")
+			for new_qtrid in constants.period_id:
+				revised_qtrids=[new_qtrid]
+				for i in range(4):
+					new_qtrid+=0.01
+					new_qtrid=round(new_qtrid,2)
+					revised_qtrids.append(new_qtrid)
+				for revised_qtrid in revised_qtrids:
+					qtrid=revised_qtrid
+					url=f'https://www.bseindia.com/corporates/shpPromoterNGroup.aspx?scripcd={str(bseid)}&qtrid={str(qtrid)}'
+					print(f"{url}")
+					try:
+						r = requests.get(url=url, headers=constants.HEADERS)
+						if not available(r):
+							continue
+						tree = html.fromstring(r.content)
+						columns,status=get_column_name(tree)
+						if not (status and columns):
+							continue
+						case_type=get_case_type(columns)
+						df=get_dataframe(case_type,tree,columns)
+						df['bseid']=bseid
+						df['qtrid']=qtrid
+						final_df=pd.concat([final_df,df],ignore_index=True)
+						#save_df(df,filename="BSEID_"+str(bseid)+"_qtrid_"+str(qtrid))
+					except Exception as e:
+						print(f"In Exception inner {e} {case_type} {url}")
+						url_exeception.append(url)
+						print(f"{e}{format_exc()} \n caseid is {case_type} \n {url}")
 	except Exception as e:
 		print(e)
 		print(f"{e} \n {format_exc()}")
