@@ -603,6 +603,24 @@ class Case30(PromoterNGroup):
                 df[val]=" "
         return list(df.columns)
 
+class Case300(PromoterNGroup):
+    caseid=57
+    def __init__(self,tree,cols):
+        self.tree = tree
+        self.cols = [ele.strip() for ele in cols]
+    def set_column_name(self):
+        df=pd.DataFrame()
+        for ix,val in enumerate(self.cols):
+            if ix==7:
+                df[self.cols[ix]+'->'+self.cols[9]]=" "
+                df[self.cols[ix]+'->'+self.cols[10]]=" "
+                continue
+            elif ix>=9:
+                pass
+            else:
+                df[val]=" "
+        return list(df.columns)
+
 class Case31(PromoterNGroup):
     caseid=58
     def __init__(self,tree,cols):
